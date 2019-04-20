@@ -1,17 +1,18 @@
-version: "2"
+version: "3"
 services:
-  app:
-    build: ./app
-    links:
-      - db
+  jupyter:
+    build: ./jupyter
     ports:
-      - "5000:5000"
-
-  db:
-    image: mysql:5.7
-    ports:
-      - "32000:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: root
+      - "8888:8888"
     volumes:
-      - ./db:/docker-entrypoint-initdb.d/:ro
+      - ./jupyter:/home/jovyan/work
+
+  mysql:
+    image: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: pw
+      MYSQL_DATABASE: electionmoney
+    volumes:
+      - ./mysql/sql:/docker-entrypoint-initdb.d/:ro
