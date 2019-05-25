@@ -7,12 +7,10 @@ services:
     volumes:
       - ./jupyter:/home/jovyan/work
 
-  mysql:
-    image: mysql
-    ports:
-      - "3306:3306"
+  db:
+    image: postgres
     environment:
-      MYSQL_ROOT_PASSWORD: pw
-      MYSQL_DATABASE: electionmoney
+      POSTGRES_PASSWORD: pw
+      POSTGRES_DB: electionmoney
     volumes:
-      - ./mysql/sql:/docker-entrypoint-initdb.d/:ro
+      - ./db/sql:/docker-entrypoint-initdb.d/:ro

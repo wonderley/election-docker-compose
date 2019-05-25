@@ -1,6 +1,6 @@
 create table CSV
 (
-	CSVId int auto_increment
+	CSVId serial
 		primary key,
 	FilerID varchar(200) null,
 	Type varchar(200) null,
@@ -13,7 +13,7 @@ create table CSV
 	PAC varchar(200) null,
 	Occupation varchar(200) null,
 	Employer varchar(200) null,
-	Date datetime null,
+	Date timestamp null,
 	Election varchar(200) null,
 	Election_Year varchar(200) null,
 	Cash_Amount decimal(10,2) null,
@@ -28,7 +28,7 @@ create table CSV
 
 create table Contributor
 (
-	ContributorId int auto_increment
+	ContributorId serial
 		primary key,
 	LastName varchar(500) null,
 	FirstName varchar(500) null,
@@ -44,10 +44,10 @@ create table Contributor
 
 create table Log
 (
-	LogId int auto_increment
+	LogId serial
 		primary key,
 	Application varchar(50) not null,
-	DateLogged datetime not null,
+	DateLogged timestamp not null,
 	Level varchar(10) not null,
 	Message varchar(50) not null,
 	UserName varchar(250) null,
@@ -59,14 +59,14 @@ create table Log
 
 create table Office
 (
-	OfficeId int auto_increment
+	OfficeId serial
 		primary key,
 	Name varchar(250) null
 );
 
 create table Candidate
 (
-	CandidateId int auto_increment
+	CandidateId serial
 		primary key,
 	FilerId varchar(20) not null,
 	OfficeId int not null,
@@ -89,7 +89,7 @@ create index OfficeId
 
 create table Report
 (
-	ReportId int auto_increment
+	ReportId serial
 		primary key,
 	ReportType varchar(45) null,
 	Year int null,
@@ -102,16 +102,16 @@ create table Report
 		foreign key (CandidateId) references Candidate (CandidateId)
 );
 
-create index CandidateId
+create index CandidateIdReport
 	on Report (CandidateId);
 
 create table ScrapeLog
 (
-	ScrapeLogId int auto_increment
+	ScrapeLogId serial
 		primary key,
-	ScrapeDate datetime null,
-	ProcessDate datetime null,
-	RawData longtext null,
+	ScrapeDate timestamp null,
+	ProcessDate timestamp null,
+	RawData text null,
 	PageURL varchar(200) null,
 	CandidateId int null,
 	ReportId int null,
@@ -121,7 +121,7 @@ create table ScrapeLog
 		foreign key (ReportId) references Report (ReportId)
 );
 
-create index CandidateId
+create index CandidateIdScrapeLog
 	on ScrapeLog (CandidateId);
 
 create index ReportId
@@ -129,14 +129,14 @@ create index ReportId
 
 create table Contribution
 (
-	ContributionId int auto_increment
+	ContributionId serial
 		primary key,
 	FilerId varchar(20) null,
 	CandidateId int null,
 	ScrapeLogId int null,
 	ContributorId int null,
 	ContributionType int null,
-	ContributionDate datetime null,
+	ContributionDate timestamp null,
 	Amount decimal(10,2) null,
 	Description varchar(1000) null,
 	constraint Contribution_ibfk_1
@@ -147,7 +147,7 @@ create table Contribution
 		foreign key (ContributorId) references Contributor (ContributorId)
 );
 
-create index CandidateId
+create index CandidateIdContribution
 	on Contribution (CandidateId);
 
 create index ContributorId
