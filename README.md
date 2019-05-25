@@ -1,16 +1,16 @@
 # Georgia Election Money Project Docker Environment
 
-Reusable environment for data loader and MySQL database.
+Reusable environment for data loader and Postgres database.
 
 File structure:
 - `docker-compose.yml`: Configuration file for [Docker Compose](https://docs.docker.com/compose/).
 - `jupyter`: Adds some Python packages to the default Jupyter image, then runs a notebook with the data loader and a sample CSV file.
-- `mysql`: Runs the default MySQL image with a custom script for setting up the electiomoney database.
+- `db`: Runs the default PostgreSQL image with a custom script for setting up the electiomoney database.
 
 To set up:
 - Install Docker and Docker Engine. On a Mac or Windows machine, just install [Docker Desktop](https://www.docker.com/products/docker-desktop).
-- Run `docker-compose up -d`. The `jupyter` image is built, and both containers are started.
-- Run `docker-compose logs` to monitor the initialization of both containers. MySQL will start and initialize the database using the script in `mysql/sql`. It will then restart. When the Jupyter container is initialized, it will print something very close to this:
+- Run `docker-compose up --detach`. The `jupyter` image is built, and both containers are started.
+- Run `docker-compose logs` to monitor the initialization of both containers. Postgres will start and initialize the database using the script in `db/sql`. It will then restart. When the Jupyter container is initialized, it will print something very close to this:
 
 ```
 jupyter_1  |     To access the notebook, open this file in a browser:
