@@ -1,6 +1,6 @@
 create table CSV
 (
-	CSVId int auto_increment
+	CSVId int serial
 		primary key,
 	FilerID varchar(200) null,
 	Type varchar(200) null,
@@ -28,7 +28,7 @@ create table CSV
 
 create table Contributor
 (
-	ContributorId int auto_increment
+	ContributorId int serial
 		primary key,
 	LastName varchar(500) null,
 	FirstName varchar(500) null,
@@ -44,7 +44,7 @@ create table Contributor
 
 create table Log
 (
-	LogId int auto_increment
+	LogId int serial
 		primary key,
 	Application varchar(50) not null,
 	DateLogged datetime not null,
@@ -59,14 +59,14 @@ create table Log
 
 create table Office
 (
-	OfficeId int auto_increment
+	OfficeId int serial
 		primary key,
 	Name varchar(250) null
 );
 
 create table Candidate
 (
-	CandidateId int auto_increment
+	CandidateId int serial
 		primary key,
 	FilerId varchar(20) not null,
 	OfficeId int not null,
@@ -89,7 +89,7 @@ create index OfficeId
 
 create table Report
 (
-	ReportId int auto_increment
+	ReportId int serial
 		primary key,
 	ReportType varchar(45) null,
 	Year int null,
@@ -107,7 +107,7 @@ create index CandidateId
 
 create table ScrapeLog
 (
-	ScrapeLogId int auto_increment
+	ScrapeLogId int serial
 		primary key,
 	ScrapeDate datetime null,
 	ProcessDate datetime null,
@@ -129,7 +129,7 @@ create index ReportId
 
 create table Contribution
 (
-	ContributionId int auto_increment
+	ContributionId int serial
 		primary key,
 	FilerId varchar(20) null,
 	CandidateId int null,
