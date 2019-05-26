@@ -2,6 +2,8 @@ version: "3"
 services:
   jupyter:
     build: ./jupyter
+    depends_on:
+      - "db"
     ports:
       - "8888:8888"
     volumes:
@@ -14,3 +16,16 @@ services:
       POSTGRES_DB: electionmoney
     volumes:
       - ./db/sql:/docker-entrypoint-initdb.d/:ro
+
+  webapi:
+    build: ./webapi
+    depends_on:
+      - "db"
+    entrypoint: /bin/bash
+    command: ["./wait-for-postgres.sh", "db", "--", "npm", "start"]
+    environment:
+      DATABASE: electionmoney
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: pw
+    ports:
+      - "8080:8080"

@@ -5,10 +5,10 @@ import { contributor } from "./models/contributor.model"
 import { log } from "./models/log.model"
 import { scrapeLog } from "./models/scrapeLog.model"
 
-export const env = process.env.NODE_ENV || "development"
+export const useSQLiteMockData = false;
 
 export let sequelize
-if (env === "development") {
+if (useSQLiteMockData) {
   sequelize = new Sequelize({
     host: "localhost",
     dialect: "sqlite",
@@ -16,9 +16,16 @@ if (env === "development") {
   })
   console.log("Configured local SQLite database.")
 } else {
-  // TODO Set up real DB connection here
-  // sequelize = ...
-  console.log("Configured remote Azure database.")
+  sequelize = new Sequelize(
+    process.env.DATABASE,
+    process.env.DATABASE_USER,
+    process.env.DATABASE_PASSWORD,
+    {
+      dialect: 'postgres',
+      host: 'db',
+    },
+  );
+  console.log("Configured PostgreSQL database.")
 }
 
 export const db = {

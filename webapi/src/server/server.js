@@ -1,13 +1,13 @@
 import express from "express"
 import { router } from "../routes/index.route"
 import bodyParser from "body-parser"
-import { env, db } from "../db/db"
+import { useSQLiteMockData, db } from "../db/db"
 
 const start = async () => {
 	try {
 		await db.init()
 
-		if (env === "development") {
+		if (useSQLiteMockData) {
 			const { seed } = await import("../db/seed")
 			seed()
 		}
